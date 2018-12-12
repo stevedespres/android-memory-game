@@ -2,9 +2,7 @@
 
 # Membres de l'equipe 
 
-Guillaume COURTIN
-Steve DESPRES
-EI5 IHMRV
+Guillaume COURTIN & Steve DESPRES (EI5 IHMRV)
 
 # Contexte
 
