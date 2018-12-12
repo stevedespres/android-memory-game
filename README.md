@@ -10,9 +10,12 @@ EI5 IHMRV
 
 Ce TP, travail en groupe de 2 à 3 étudiants noté, devra nécessairement mettre en oeuvre les notions suivantes (le barème de notation tiendra compte de chaque notion) :
 
-• interface personnalisée (icône, style, ...)
+• interface personnalisée (icône, style, ...)$
+
 • notion de thread et/ou service
+
 • fragments
+
 • enregistrement de données (SharedPreferences)
 
 La mise en place d'une toolbar, notification, ... et de fonctionnalités du type gestion du
