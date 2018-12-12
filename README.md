@@ -9,6 +9,7 @@ EI5 IHMRV
 # Contexte
 
 Ce TP, travail en groupe de 2 à 3 étudiants noté, devra nécessairement mettre en oeuvre les notions suivantes (le barème de notation tiendra compte de chaque notion) :
+
 • interface personnalisée (icône, style, ...)
 • notion de thread et/ou service
 • fragments
