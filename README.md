@@ -2,7 +2,7 @@
 
 # Membres de l'equipe 
 
-Guillaume COURTIN & Steve DESPRES (EI5 IHMRV)
+Guillaume COURTIN & Nathan DUBERNARD & Steve DESPRES (EI5 IHMRV)
 
 # Contexte
 
