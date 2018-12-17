@@ -2,11 +2,13 @@ package game;
 
 import com.example.usrlocal.memory.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Memory {
+public class Memory implements Serializable {
 
+    private static Memory instance;
     // Globales variables
     static private int N_PAIRS_MIN = 1;
     static private int N_PAIRS_MAX = 6;
@@ -28,8 +30,22 @@ public class Memory {
      * @param nPairs
      * @throws MemoryException
      */
-    public Memory(final int nPairs) throws MemoryException {
+    private Memory(final int nPairs) throws MemoryException {
         init(nPairs);
+    }
+
+    /**
+     * Singleton : get instance of Memory
+     * @param nPairs
+     * @return
+     * @throws MemoryException
+     */
+    public static Memory getInstance(final int nPairs) throws MemoryException {
+        if(instance==null){
+            return new Memory(nPairs);
+        }else{
+            return instance;
+        }
     }
 
     /**

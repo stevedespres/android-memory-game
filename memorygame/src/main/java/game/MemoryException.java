@@ -1,6 +1,8 @@
 package game;
 
-public class MemoryException extends Exception{
+import java.io.Serializable;
+
+public class MemoryException extends Exception implements Serializable {
 
     public MemoryException(String message) {
         super(message);
