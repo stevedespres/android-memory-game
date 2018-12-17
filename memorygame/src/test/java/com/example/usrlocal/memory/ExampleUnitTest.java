@@ -1,4 +1,4 @@
-package com.guillaume.steve.memorygame;
+package com.example.usrlocal.memory;
 
 import org.junit.Test;
 

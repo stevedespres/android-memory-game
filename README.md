@@ -2,7 +2,11 @@
 
 # Membres de l'equipe 
 
+<<<<<<< HEAD
 Guillaume COURTINNathan DUBERNARD & Steve DESPRES (EI5 IHMRV)
+=======
+Guillaume COURTIN & Nathan DUBERNARD & Steve DESPRES (EI5 IHMRV)
+>>>>>>> steve_branch
 
 # Contexte
 
