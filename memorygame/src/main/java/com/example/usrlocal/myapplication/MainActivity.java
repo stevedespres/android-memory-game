@@ -1,4 +1,4 @@
-package com.example.usrlocal.memory;
+package com.example.usrlocal.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.usrlocal.memory;
+package com.example.usrlocal.myapplication;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.usrlocal.memory", appContext.getPackageName());
+        assertEquals("com.example.usrlocal.myapplication", appContext.getPackageName());
     }
 }
