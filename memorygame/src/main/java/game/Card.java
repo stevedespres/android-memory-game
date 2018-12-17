@@ -4,13 +4,14 @@ public class Card {
 
     private int _id;
     private int _pairId;
-    private int _imageId;
+    private int _imageViewId;
     private boolean _discovered;
 
-    public Card(int id, int pairId){
+    public Card(int id, int pairId, int imageViewId){
         _id=id;
         _pairId=pairId;
         _discovered = false;
+        _imageViewId = imageViewId;
     }
 
     public int getId() {
@@ -28,4 +29,6 @@ public class Card {
     public boolean isDiscovered() {
         return _discovered;
     }
+
+    public int getImageViewId(){ return _imageViewId; }
 }

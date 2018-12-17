@@ -1,5 +1,7 @@
 package game;
 
+import com.example.usrlocal.memory.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +52,8 @@ public class Memory {
             // For each pairs
             for(int i=0; i<_nPairs;  i++){
                 // Create 2 cards
-                Card card1 = new Card(i ,i);
-                Card card2 = new Card((2*N_PAIRS_MAX)+i, i);
+                Card card1 = new Card(i ,i, generateImageViewId(i));
+                Card card2 = new Card((2*N_PAIRS_MAX)+i, i, generateImageViewId(i));
                 cardsList.add(card1);
                 cardsList.add(card2);
             }
@@ -130,4 +132,27 @@ public class Memory {
         return null;
     }
 
+    /**
+     * Generate an image view id from the card id (association image <=> card)
+     * @param id card id
+     * @return image view id
+     */
+    public int generateImageViewId(int id){
+        switch (id){
+            case 0:
+                return R.drawable.pair_1;
+            case 1:
+                return R.drawable.pair_2;
+            case 2:
+                return R.drawable.pair_3;
+            case 3:
+                return R.drawable.pair_4;
+            case 4:
+                return R.drawable.pair_5;
+            case 5:
+                return R.drawable.pair_6;
+            default:
+                return R.drawable.pair_1;
+        }
+    }
 }
