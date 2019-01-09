@@ -1,5 +1,7 @@
 package game;
 
+import com.example.usrlocal.memory.CardFragment;
+
 import java.io.Serializable;
 
 public class Card implements Serializable {
@@ -8,6 +10,7 @@ public class Card implements Serializable {
     private int _pairId;
     private int _imageViewId;
     private boolean _discovered;
+    private CardFragment _frament;
 
     public Card(int id, int pairId, int imageViewId){
         _id=id;
@@ -24,8 +27,8 @@ public class Card implements Serializable {
         return _pairId;
     }
 
-    public void setDiscovered(){
-        _discovered=true;
+    public void setDiscovered(boolean value){
+        _discovered=value;
     }
 
     public boolean isDiscovered() {
@@ -33,4 +36,8 @@ public class Card implements Serializable {
     }
 
     public int getImageViewId(){ return _imageViewId; }
+
+    public CardFragment getFrament() {return _frament;}
+
+    public void setFrament(CardFragment _frament) {this._frament = _frament;}
 }

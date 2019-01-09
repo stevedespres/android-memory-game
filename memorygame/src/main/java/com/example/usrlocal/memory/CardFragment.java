@@ -1,6 +1,7 @@
 package com.example.usrlocal.memory;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -12,16 +13,20 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import game.Card;
+import game.Memory;
+import game.MemoryException;
+
 public class CardFragment extends Fragment {
-    private static final String ARG_IMAGE_VIEW_ID = "imageViewId";
-    private static final String ARG_CARD_ID = "cardId";
-    private static final String ARG_PAIR_ID = "pairId";
+    /**
+     * Attributs faisant la liason avec la carte côté métier
+     */
+    private static final String ARG_CARD = "card";
+    private Card card;
 
-    // TODO: Rename and change types of parameters
-    private int imageViewId;
-    private int cardId;
-    private int pairId;
-
+    /**
+     * Elements graphiques de la carte
+     */
     protected FrameLayout zone ;
     protected ImageView dos;
     protected ImageView face;
@@ -31,17 +36,15 @@ public class CardFragment extends Fragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
+     * Méthode qui permet d'instancier un nouveau fragment ici une carte
+     * Automatiquement appelé
+     * @param card objet métier représentant la carte
+     * @return le fragment généré
      */
-    // TODO: Rename and change types and number of parameters
-    public static CardFragment newInstance(int cardId, int pairId, int imageViewId) {
+    public static CardFragment newInstance(Card card) {
         CardFragment fragment = new CardFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_CARD_ID, pairId);
-        args.putInt(ARG_PAIR_ID, pairId);
-        args.putInt(ARG_IMAGE_VIEW_ID, imageViewId);
+        args.putSerializable(ARG_CARD, card);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,9 +53,8 @@ public class CardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            cardId = getArguments().getInt(ARG_CARD_ID);
-            pairId = getArguments().getInt(ARG_PAIR_ID);
-            imageViewId = getArguments().getInt(ARG_IMAGE_VIEW_ID);
+            card = (Card) getArguments().getSerializable(ARG_CARD);
+            card.setFrament(this);
         }
     }
 
@@ -61,19 +63,46 @@ public class CardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_card, container, false);
-        zone = (FrameLayout) v.findViewById(R.id.zone);
-        dos = (ImageView)v.findViewById(R.id.dos);
+        zone = v.findViewById(R.id.zone);
+        dos = v.findViewById(R.id.dos);
 
-        face = (ImageView)v.findViewById(R.id.face);
-        face.setImageDrawable( this.getActivity().getDrawable(imageViewId));
+        face = v.findViewById(R.id.face);
+        face.setImageDrawable( this.getActivity().getDrawable(card.getImageViewId()));
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),imageViewId,Toast.LENGTH_LONG).show();
-                dos.setVisibility(View.INVISIBLE);
-                face.setVisibility(View.VISIBLE);
+                try {
+                    dos.setVisibility(View.INVISIBLE);
+                    face.setVisibility(View.VISIBLE);
+                    switch(Memory.getInstance(0).pickACard(card)){
+                        case 0:
+                            Toast.makeText(getContext(),"First card :" + card.getPairId(),Toast.LENGTH_LONG).show();
+                            break;
+                        case 1:
+                            Toast.makeText(getContext(),"Second card :" + card.getPairId(),Toast.LENGTH_LONG).show();
+                            break;
+                        case 2:
+                            Toast.makeText(getContext(),"Fin du jeu",Toast.LENGTH_LONG).show();
+                            break;
+                        case 3:
+                            Toast.makeText(getContext(),"Mauvaise carte :" + card.getPairId(),Toast.LENGTH_LONG).show();
+                            break;
+                        default:
+                            Toast.makeText(getContext(),"Erreur :" + card.getPairId(),Toast.LENGTH_LONG).show();
+                    }
+                } catch (MemoryException e) {
+                    e.printStackTrace();
+                }
             }
         });
         return v;
+    }
+
+    /**
+     * Méthode qui permet de remettre la carte dans un état inconnu lorsque c'est la mauvaise
+     */
+    public void wrongCard(){
+        dos.setVisibility(View.VISIBLE);
+        face.setVisibility(View.INVISIBLE);
     }
 }

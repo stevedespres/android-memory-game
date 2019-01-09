@@ -52,9 +52,7 @@ public class GameActivity extends AppCompatActivity {
         // Create card fragments
         for(Card c : cards){
             Bundle b = new Bundle();
-            b.putInt("imageViewId", c.getImageViewId());
-            b.putInt("cardId", c.getId());
-            b.putInt("pairId", c.getPairId());
+            b.putSerializable("card", c);
 
             CardFragment cf = new CardFragment();
             cf.setArguments(b);

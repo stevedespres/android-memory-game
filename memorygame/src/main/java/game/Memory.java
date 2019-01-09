@@ -24,7 +24,7 @@ public class Memory implements Serializable {
     private boolean _firstCardPicked;
     private Card card1;
     private Card card2;
-
+    private boolean lastPairIsGood = true;
     /**
      * Constructor
      * @param nPairs
@@ -41,9 +41,9 @@ public class Memory implements Serializable {
      * @throws MemoryException
      */
     public static Memory getInstance(final int nPairs) throws MemoryException {
-        if(instance==null){
-            return new Memory(nPairs);
-        }else{
+        synchronized (Memory.class) {
+            if (instance == null)
+                instance = new Memory(nPairs);
             return instance;
         }
     }
@@ -83,31 +83,45 @@ public class Memory implements Serializable {
      * @return is success
      */
     public boolean isSuccess(){
-        if(_nPairsDiscovered==_nPairsDiscovered){
+        if(_nPairsDiscovered == _nPairs){
             return true;
         }else{
             return false;
         }
     }
 
-    public void pickACard(Card card){
+    public int pickACard(Card card){
 
-        // Invert the flag
-        _firstCardPicked = !_firstCardPicked;
+        if(!card.isDiscovered()) {
+            // Invert the flag
+            _firstCardPicked = !_firstCardPicked;
+            card.setDiscovered(true);
 
-        // If is the first card picked
-        if(_firstCardPicked){
-            // Save card id of the first card picked
-            card1 = card;
-        // If is the second card picked
-        }else{
-            // Save card id of the second card picked
-            card2 = card;
-            // If the pair is discovered
-            if(card1.getPairId() == card2.getPairId()){
-                _nPairsDiscovered++;
+            // If is the first card picked
+            if (_firstCardPicked) {
+                setLastPair();
+                // Save card id of the first card picked
+                card1 = card;
+                return 0;
+                // If is the second card picked
+            } else {
+                // Save card id of the second card picked
+                card2 = card;
+                // If the pair is discovered
+                if (card1.getPairId() == card2.getPairId()) {
+                    _nPairsDiscovered++;
+                    lastPairIsGood = true;
+                    if(isSuccess())
+                    {
+                        return 2;
+                    }else
+                        return 1;
+                }
+                lastPairIsGood = false;
+                return 3;
             }
         }
+        return -1;
     }
 
     /**
@@ -169,6 +183,19 @@ public class Memory implements Serializable {
                 return R.drawable.pair_6;
             default:
                 return R.drawable.pair_1;
+        }
+    }
+
+    /**
+     * Méthode qui permet de configurer la pair précédement retournée
+     */
+    public void setLastPair() {
+        if (!lastPairIsGood) {
+            card1.setDiscovered(false);
+            card2.setDiscovered(false);
+            card1.getFrament().wrongCard();
+            card2.getFrament().wrongCard();
+            lastPairIsGood = true;
         }
     }
 }
