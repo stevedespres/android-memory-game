@@ -1,9 +1,12 @@
 package com.example.usrlocal.memory;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,30 +20,34 @@ public class GameActivity extends AppCompatActivity {
     protected GridLayout container;
     private Memory game;
 
+    protected ProgressBar timerBar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         Intent intent = getIntent();
+        timerBar = (ProgressBar) findViewById(R.id.timerBar);
         // Get Year data from UEsChoicesActivity
         container = (GridLayout) findViewById(R.id.container);
         game = (Memory) intent.getSerializableExtra("GAME");
         switch (game.getNPairs()){
             case 4:
-            container.setColumnCount(4);
-            container.setRowCount(2);
+            container.setColumnCount(3);
+            container.setRowCount(4);
             break;
             case 5:
-                container.setColumnCount(2);
-                container.setRowCount(5);
+                container.setColumnCount(3);
+                container.setRowCount(4);
                 break;
             case 6:
-                container.setColumnCount(4);
-                container.setRowCount(3);
+                container.setColumnCount(3);
+                container.setRowCount(4);
                 break;
         }
         initGameView();
+        startTimer();
 
     }
 
@@ -67,6 +74,45 @@ public class GameActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container,cf)
                     .commit();
+        }
+    }
+    private void startTimer(){
+        Timer timer = new Timer();
+        timer.execute();
+    }
+
+    private class Timer extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected void onPreExecute(){
+            timerBar.setProgress(0);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values){
+            super.onProgressUpdate(values);
+            timerBar.setProgress(values[0]);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String result = "";
+            for(int i=0; i<=100;i++){
+                try{
+                    Thread.sleep(1000L);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                result += i;
+                publishProgress(i);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            super.onPostExecute(result);
+            Toast.makeText(GameActivity.this, "Perdu temps écoulé", Toast.LENGTH_LONG).show();
         }
     }
 }
