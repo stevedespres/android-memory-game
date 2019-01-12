@@ -14,14 +14,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/endText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Fin de la partie"
             android:gravity="center"/>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/winText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Vous avez gagné !"
@@ -33,13 +33,13 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/menuButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Menu" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/quitButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quitter" />

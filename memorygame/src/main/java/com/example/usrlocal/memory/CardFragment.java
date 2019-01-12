@@ -20,7 +20,7 @@ import game.Card;
 import game.Memory;
 import game.MemoryException;
 
-public class CardFragment extends Fragment implements Serializable{
+public class CardFragment extends Fragment implements Serializable {
     /**
      * Attributs faisant la liason avec la carte côté métier
      */
@@ -30,7 +30,7 @@ public class CardFragment extends Fragment implements Serializable{
     /**
      * Elements graphiques de la carte
      */
-    protected FrameLayout zone ;
+    protected FrameLayout zone;
     protected ImageView dos;
     protected ImageView face;
 
@@ -41,6 +41,7 @@ public class CardFragment extends Fragment implements Serializable{
     /**
      * Méthode qui permet d'instancier un nouveau fragment ici une carte
      * Automatiquement appelé
+     *
      * @param card objet métier représentant la carte
      * @return le fragment généré
      */
@@ -64,7 +65,7 @@ public class CardFragment extends Fragment implements Serializable{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =inflater.inflate(R.layout.fragment_card, container, false);
+        View v = inflater.inflate(R.layout.fragment_card, container, false);
         zone = v.findViewById(R.id.zone);
         dos = v.findViewById(R.id.dos);
 
@@ -76,10 +77,10 @@ public class CardFragment extends Fragment implements Serializable{
                 try {
                     dos.setVisibility(View.INVISIBLE);
                     face.setVisibility(View.VISIBLE);
-                    if(Memory.getInstance(0).pickACard(card)){
-                        ((GameActivity)getActivity()).endGame(true);
+                    if (Memory.getInstance(0).pickACard(card)) {
+                        ((GameActivity) getActivity()).endGame(true);
                     }
-                    ((GameActivity)getActivity()).resetWrongCards();
+                    ((GameActivity) getActivity()).resetWrongCards();
                 } catch (MemoryException e) {
                     e.printStackTrace();
                 }
@@ -91,7 +92,7 @@ public class CardFragment extends Fragment implements Serializable{
     /**
      * Méthode qui permet de remettre la carte dans un état inconnu lorsque c'est la mauvaise
      */
-    public void wrongCard(){
+    public void wrongCard() {
         dos.setVisibility(View.VISIBLE);
         face.setVisibility(View.INVISIBLE);
     }

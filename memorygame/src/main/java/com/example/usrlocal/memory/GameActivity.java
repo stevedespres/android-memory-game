@@ -35,11 +35,11 @@ public class GameActivity extends AppCompatActivity {
         // Get Year data from UEsChoicesActivity
         container = (GridLayout) findViewById(R.id.container);
         game = (Memory) intent.getSerializableExtra("GAME");
-        switch (game.getNPairs()){
+        switch (game.getNPairs()) {
             case 4:
-            container.setColumnCount(3);
-            container.setRowCount(4);
-            break;
+                container.setColumnCount(3);
+                container.setRowCount(4);
+                break;
             case 5:
                 container.setColumnCount(3);
                 container.setRowCount(4);
@@ -54,9 +54,9 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private void initGameView(){
+    private void initGameView() {
         // Create card fragments
-        for(Card c : game.getCardsList()){
+        for (Card c : game.getCardsList()) {
             Bundle b = new Bundle();
             b.putSerializable("card", c);
 
@@ -69,43 +69,41 @@ public class GameActivity extends AppCompatActivity {
         // Shuffle cards
         Collections.shuffle(cardsFragments);
 
-        for(CardFragment cf : cardsFragments){
+        for (CardFragment cf : cardsFragments) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container,cf)
+                    .add(R.id.container, cf)
                     .commit();
         }
     }
 
-    public void resetWrongCards(){
-        for(CardFragment c : cardsFragments){
-            if(!c.getCard().isVisible())
+    public void resetWrongCards() {
+        for (CardFragment c : cardsFragments) {
+            if (!c.getCard().isVisible())
                 c.wrongCard();
         }
     }
 
-    public void endGame(boolean isWin){
-        Intent endActivityIntent = new Intent(GameActivity.this,EndActivity.class);
+    public void endGame(boolean isWin) {
+        Intent endActivityIntent = new Intent(GameActivity.this, EndActivity.class);
         if (isWin) {
             timer.cancel(true);
-            //endActivityIntent.putExtra("card", cardsFragments)
+            endActivityIntent.putExtra("win", true);
             startActivity(endActivityIntent);
-        }
-        else
-        {
-            Toast.makeText(GameActivity.this, "Fin du jeu : Perdu", Toast.LENGTH_LONG).show();
+        } else {
+            endActivityIntent.putExtra("win", false);
             startActivity(endActivityIntent);
         }
     }
 
-    private class TimerGame extends AsyncTask<Void, Integer, Void>{
+    private class TimerGame extends AsyncTask<Void, Integer, Void> {
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             timerBar.setProgress(0);
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values){
+        protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             timerBar.setProgress(values[0]);
         }
@@ -113,10 +111,10 @@ public class GameActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             String result = "";
-            for(int i=0; i<=100;i++){
-                try{
+            for (int i = 0; i <= 100; i++) {
+                try {
                     Thread.sleep(1000L);
-                }catch (InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 result += i;
@@ -126,7 +124,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void result){
+        protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             endGame(false);
         }
