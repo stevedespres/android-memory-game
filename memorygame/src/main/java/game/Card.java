@@ -10,7 +10,7 @@ public class Card implements Serializable {
     private int _pairId;
     private int _imageViewId;
     private boolean _discovered;
-    private CardFragment _frament;
+    private boolean _visible;
 
     public Card(int id, int pairId, int imageViewId){
         _id=id;
@@ -35,9 +35,9 @@ public class Card implements Serializable {
         return _discovered;
     }
 
+    public boolean isVisible() {return _visible;}
+
+    public void setVisible(boolean _visible) { this._visible = _visible;}
+
     public int getImageViewId(){ return _imageViewId; }
-
-    public CardFragment getFrament() {return _frament;}
-
-    public void setFrament(CardFragment _frament) {this._frament = _frament;}
 }

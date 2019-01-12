@@ -8,6 +8,8 @@ import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,10 +19,11 @@ import game.Memory;
 
 public class GameActivity extends AppCompatActivity {
 
-    protected GridLayout container;
     private Memory game;
-
+    protected GridLayout container;
+    protected List<CardFragment> cardsFragments = new ArrayList<>();
     protected ProgressBar timerBar = null;
+    private TimerGame timer = new TimerGame();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +50,13 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
         initGameView();
-        startTimer();
+        timer.execute();
 
     }
 
     private void initGameView(){
-
-        List<CardFragment> cardsFragments = new ArrayList<>();
-        List<Card> cards = game.getCardsList();
-
         // Create card fragments
-        for(Card c : cards){
+        for(Card c : game.getCardsList()){
             Bundle b = new Bundle();
             b.putSerializable("card", c);
 
@@ -76,12 +75,29 @@ public class GameActivity extends AppCompatActivity {
                     .commit();
         }
     }
-    private void startTimer(){
-        Timer timer = new Timer();
-        timer.execute();
+
+    public void resetWrongCards(){
+        for(CardFragment c : cardsFragments){
+            if(!c.getCard().isVisible())
+                c.wrongCard();
+        }
     }
 
-    private class Timer extends AsyncTask<Void, Integer, Void> {
+    public void endGame(boolean isWin){
+        Intent endActivityIntent = new Intent(GameActivity.this,EndActivity.class);
+        if (isWin) {
+            timer.cancel(true);
+            //endActivityIntent.putExtra("card", cardsFragments)
+            startActivity(endActivityIntent);
+        }
+        else
+        {
+            Toast.makeText(GameActivity.this, "Fin du jeu : Perdu", Toast.LENGTH_LONG).show();
+            startActivity(endActivityIntent);
+        }
+    }
+
+    private class TimerGame extends AsyncTask<Void, Integer, Void>{
 
         @Override
         protected void onPreExecute(){
@@ -112,7 +128,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result){
             super.onPostExecute(result);
-            Toast.makeText(GameActivity.this, "Perdu temps écoulé", Toast.LENGTH_LONG).show();
+            endGame(false);
         }
     }
 }

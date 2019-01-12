@@ -1,5 +1,7 @@
 package game;
 
+import android.widget.Toast;
+
 import com.example.usrlocal.memory.R;
 
 import java.io.Serializable;
@@ -90,38 +92,34 @@ public class Memory implements Serializable {
         }
     }
 
-    public int pickACard(Card card){
+    public boolean pickACard(Card card){
 
         if(!card.isDiscovered()) {
             // Invert the flag
             _firstCardPicked = !_firstCardPicked;
-            card.setDiscovered(true);
-
             // If is the first card picked
             if (_firstCardPicked) {
                 setLastPair();
                 // Save card id of the first card picked
                 card1 = card;
-                return 0;
-                // If is the second card picked
-            } else {
+                card1.setVisible(true);
+            }
+            // If is the second card picked
+            else {
                 // Save card id of the second card picked
                 card2 = card;
+                card2.setVisible(true);
                 // If the pair is discovered
                 if (card1.getPairId() == card2.getPairId()) {
                     _nPairsDiscovered++;
                     lastPairIsGood = true;
-                    if(isSuccess())
-                    {
-                        return 2;
-                    }else
-                        return 1;
                 }
-                lastPairIsGood = false;
-                return 3;
+                else {
+                    lastPairIsGood = false;
+                }
             }
         }
-        return -1;
+        return isSuccess();
     }
 
     /**
@@ -193,8 +191,8 @@ public class Memory implements Serializable {
         if (!lastPairIsGood) {
             card1.setDiscovered(false);
             card2.setDiscovered(false);
-            card1.getFrament().wrongCard();
-            card2.getFrament().wrongCard();
+            card1.setVisible(false);
+            card2.setVisible(false);
             lastPairIsGood = true;
         }
     }

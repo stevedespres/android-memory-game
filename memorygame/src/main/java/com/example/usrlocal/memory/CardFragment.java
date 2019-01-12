@@ -3,6 +3,7 @@ package com.example.usrlocal.memory;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -13,11 +14,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 import game.Card;
 import game.Memory;
 import game.MemoryException;
 
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements Serializable{
     /**
      * Attributs faisant la liason avec la carte côté métier
      */
@@ -54,7 +57,6 @@ public class CardFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             card = (Card) getArguments().getSerializable(ARG_CARD);
-            card.setFrament(this);
         }
     }
 
@@ -67,29 +69,17 @@ public class CardFragment extends Fragment {
         dos = v.findViewById(R.id.dos);
 
         face = v.findViewById(R.id.face);
-        face.setImageDrawable( this.getActivity().getDrawable(card.getImageViewId()));
+        face.setImageDrawable(this.getActivity().getDrawable(card.getImageViewId()));
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     dos.setVisibility(View.INVISIBLE);
                     face.setVisibility(View.VISIBLE);
-                    switch(Memory.getInstance(0).pickACard(card)){
-                        case 0:
-                            Toast.makeText(getContext(),"First card :" + card.getPairId(),Toast.LENGTH_LONG).show();
-                            break;
-                        case 1:
-                            Toast.makeText(getContext(),"Second card :" + card.getPairId(),Toast.LENGTH_LONG).show();
-                            break;
-                        case 2:
-                            Toast.makeText(getContext(),"Fin du jeu",Toast.LENGTH_LONG).show();
-                            break;
-                        case 3:
-                            Toast.makeText(getContext(),"Mauvaise carte :" + card.getPairId(),Toast.LENGTH_LONG).show();
-                            break;
-                        default:
-                            Toast.makeText(getContext(),"Erreur :" + card.getPairId(),Toast.LENGTH_LONG).show();
+                    if(Memory.getInstance(0).pickACard(card)){
+                        ((GameActivity)getActivity()).endGame(true);
                     }
+                    ((GameActivity)getActivity()).resetWrongCards();
                 } catch (MemoryException e) {
                     e.printStackTrace();
                 }
@@ -104,5 +94,9 @@ public class CardFragment extends Fragment {
     public void wrongCard(){
         dos.setVisibility(View.VISIBLE);
         face.setVisibility(View.INVISIBLE);
+    }
+
+    public Card getCard() {
+        return card;
     }
 }
