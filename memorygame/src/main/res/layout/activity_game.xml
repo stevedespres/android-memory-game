@@ -10,17 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titleInGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15px"
+            android:layout_marginBottom="15px"
             android:text="Memory : DIFICULTEE"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="15px"
-            android:layout_marginTop="15px"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,8 +52,8 @@
             android:layout_gravity="center_horizontal">
             <GridLayout
                 android:id="@+id/container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:columnCount="3"
                 android:rowCount="3">
             </GridLayout>

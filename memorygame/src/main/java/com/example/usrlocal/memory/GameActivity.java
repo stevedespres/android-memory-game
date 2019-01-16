@@ -17,22 +17,28 @@ import game.Memory;
 
 public class GameActivity extends AppCompatActivity {
 
+    // Instance of the game
     private Memory game = Memory.getInstance();
+
+    /**
+     * Graphics elements
+     */
     protected GridLayout container;
     protected List<CardFragment> cardsFragments = new ArrayList<>();
     protected ProgressBar timerBar = null;
-    private TimerGame timer = new TimerGame();
     protected TextView titleInGame;
+
+    //Game timer
+    private TimerGame timer = new TimerGame();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        titleInGame = (TextView) findViewById(R.id.title);
-
+        //Initialisation of the graphics elements
+        titleInGame = (TextView) findViewById(R.id.titleInGame);
         timerBar = (ProgressBar) findViewById(R.id.timerBar);
-        // Get Year data from UEsChoicesActivity
         container = (GridLayout) findViewById(R.id.container);
         switch (game.getNPairs()) {
             case 4:
@@ -48,20 +54,20 @@ public class GameActivity extends AppCompatActivity {
                 container.setRowCount(4);
                 break;
         }
+        //Initialisation of the game view
         initGameView();
-        timer.execute();
-
     }
-
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-        titleInGame.setText("Memory : " + game.getDifficulte());
+        //Start the timer
+        timer.execute();
     }
 
     private void initGameView() {
-        // Create card fragments
-        for (Card c : game.getCardsList()) {
+        // Create all fragments
+        // One for each card in the game
+        for (Card c : game.getCards()) {
             Bundle b = new Bundle();
             b.putSerializable("card", c);
 
@@ -73,14 +79,18 @@ public class GameActivity extends AppCompatActivity {
         }
         // Shuffle cards
         Collections.shuffle(cardsFragments);
-
         for (CardFragment cf : cardsFragments) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, cf)
                     .commit();
         }
+        //Update the title with the difficulty
+        titleInGame.setText("Memory : " + game.getDifficulty());
     }
 
+    /**
+     * Function allow to return the wrong cards
+     */
     public void resetWrongCards() {
         for (CardFragment c : cardsFragments) {
             if (!c.getCard().isVisible())
@@ -88,6 +98,11 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Function call when the game is ended
+     *
+     * @param isWin boolean if the game is win
+     */
     public void endGame(boolean isWin) {
         Intent endActivityIntent = new Intent(GameActivity.this, EndActivity.class);
         if (isWin) {
@@ -101,19 +116,20 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * TimerGame class
+     */
     private class TimerGame extends AsyncTask<Void, Integer, Void> {
 
         @Override
         protected void onPreExecute() {
             timerBar.setProgress(0);
         }
-
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             timerBar.setProgress(values[0]);
         }
-
         @Override
         protected Void doInBackground(Void... voids) {
             String result = "";
@@ -128,7 +144,6 @@ public class GameActivity extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);

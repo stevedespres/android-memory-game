@@ -1,49 +1,60 @@
 package game;
 
-import com.example.usrlocal.memory.CardFragment;
-
 import java.io.Serializable;
 
 public class Card implements Serializable {
 
-    private int _id;
-    private int _pairId;
-    private int _imageViewId;
-    private boolean _discovered;
-    private boolean _visible;
+    /**
+     * Variables of a card object
+     */
+    private int id;
+    private int pairId;
+    private int imageViewId;
+    private boolean discovered;
+    private boolean visible;
 
+    /**
+     * Constructor of a card
+     *
+     * @param id
+     * @param pairId
+     * @param imageViewId
+     */
     public Card(int id, int pairId, int imageViewId) {
-        _id = id;
-        _pairId = pairId;
-        _discovered = false;
-        _imageViewId = imageViewId;
+        this.id = id;
+        this.pairId = pairId;
+        discovered = false;
+        this.imageViewId = imageViewId;
     }
 
+    /**
+     * Getters and setters
+     */
     public int getId() {
-        return _id;
+        return id;
     }
 
     public int getPairId() {
-        return _pairId;
+        return pairId;
     }
 
     public void setDiscovered(boolean value) {
-        _discovered = value;
+        discovered = value;
     }
 
     public boolean isDiscovered() {
-        return _discovered;
+        return discovered;
     }
 
     public boolean isVisible() {
-        return _visible;
+        return visible;
     }
 
     public void setVisible(boolean _visible) {
-        this._visible = _visible;
+        this.visible = _visible;
     }
 
     public int getImageViewId() {
-        return _imageViewId;
+        return imageViewId;
     }
 }

@@ -17,51 +17,59 @@ import game.MemoryException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // Name of the prefs file
     public static final String PREFS_FILE = "MemoryPrefs";
 
+    // Instance of the game
     private Memory game = Memory.getInstance();
 
-    private Button playButton;
-    private RadioButton easyRadioButton;
-    private RadioButton middleRadioButton;
-    private RadioButton hardRadioButton;
-
-    private TextView nbPartiesJouees;
-    private TextView nbVictoires;
-
+    /**
+     * Graphics elements in the main activity
+     */
+    protected Button playButton;
+    protected RadioButton easyRadioButton;
+    protected RadioButton middleRadioButton;
+    protected RadioButton hardRadioButton;
+    protected TextView nbPlayedGame;
+    protected TextView nbWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences prefs = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
-        String restoredText = prefs.getString("text", null);
-        if (restoredText != null) {
-            game.setNbPartiesJouees(prefs.getInt("nbParties", 0));//"No name defined" is the default value.
-            game.setNbVictoires(prefs.getInt("nbVictoires", 0)); //0 is the default value.
-        }
-
         setContentView(R.layout.activity_main);
 
+        // Get prefs (win games and played games) in the prefs files
+        SharedPreferences prefs = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
+        String restoredText = prefs.getString("text", null);
+        // if there are some infos get them
+        if (restoredText != null) {
+            game.setNbPlayedGames(prefs.getInt("nbParties", 0));//"No name defined" is the default value.
+            game.setNbWin(prefs.getInt("nbVictoires", 0)); //0 is the default value.
+        }
+
+        // Configuration of the graphics elements
         playButton = (Button) findViewById(R.id.buttonPlay);
         easyRadioButton = (RadioButton) findViewById(R.id.radioButtonEasy);
         middleRadioButton = (RadioButton) findViewById(R.id.radioButtonMiddle);
         hardRadioButton = (RadioButton) findViewById(R.id.radioButtonHard);
-        nbPartiesJouees = (TextView) findViewById(R.id.nbParties);
-        nbVictoires = (TextView) findViewById(R.id.nbVictoires);
+        nbPlayedGame = (TextView) findViewById(R.id.nbGames);
+        nbWin = (TextView) findViewById(R.id.nbWins);
     }
 
-    /**
-     * On start
-     */
     @Override
     protected void onStart() {
         super.onStart();
         playButton.setOnClickListener(this);
-        nbVictoires.setText(Integer.toString(game.getNbVictoires()));
-        nbPartiesJouees.setText(Integer.toString(game.getNbPartiesJouees()));
+        nbWin.setText(Integer.toString(game.getNbWin()));
+        nbPlayedGame.setText(Integer.toString(game.getNbPlayedGames()));
     }
 
+    /**
+     * Init the game with the right number of pairs
+     *
+     * @param nbPairs number of pairs
+     * @return true if the game is instantiate correctly
+     */
     public boolean initGame(final int nbPairs) {
         // Create a memory game
         try {
@@ -88,15 +96,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public int getNbPairsfromDifficulty() {
         if (easyRadioButton.isChecked()) {
-            game.setDifficulte("Facile");
+            game.setDifficulty("Facile");
             return 4;
         }
         if (middleRadioButton.isChecked()) {
-            game.setDifficulte("Moyen");
+            game.setDifficulty("Moyen");
             return 5;
         }
         if (hardRadioButton.isChecked()) {
-            game.setDifficulte("Difficile");
+            game.setDifficulty("Difficile");
             return 6;
         }
         return 0;
@@ -122,8 +130,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_credits:
                 showCredits();
                 return true;
-
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -135,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.buttonPlay:
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);

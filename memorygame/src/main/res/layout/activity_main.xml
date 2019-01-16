@@ -71,7 +71,7 @@
                             app:srcCompat="@drawable/memoryicon" />
 
                         <TextView
-                            android:id="@+id/nbParties"
+                            android:id="@+id/nbGames"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -111,7 +111,7 @@
                             app:srcCompat="@drawable/victory" />
 
                         <TextView
-                            android:id="@+id/nbVictoires"
+                            android:id="@+id/nbWins"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"

@@ -1,49 +1,44 @@
 package com.example.usrlocal.memory;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.Serializable;
 
 import game.Card;
 import game.Memory;
-import game.MemoryException;
 
 public class CardFragment extends Fragment implements Serializable {
     /**
-     * Attributs faisant la liason avec la carte côté métier
+     * Variables allow the link between a card object and a fragment
      */
     private static final String ARG_CARD = "card";
     private Card card;
 
     /**
-     * Elements graphiques de la carte
+     * Graphics elements for a card
      */
-    protected FrameLayout zone;
-    protected ImageView dos;
-    protected ImageView face;
+    protected FrameLayout frame;
+    protected ImageView backImage;
+    protected ImageView frontImage;
 
-
+    /**
+     * Fragment constructor
+     */
     public CardFragment() {
     }
 
     /**
-     * Méthode qui permet d'instancier un nouveau fragment ici une carte
-     * Automatiquement appelé
+     * Function to instanciate a new fragment
+     * Automatically call
      *
-     * @param card objet métier représentant la carte
-     * @return le fragment généré
+     * @param card the associate card object
+     * @return fragment
      */
     public static CardFragment newInstance(Card card) {
         CardFragment fragment = new CardFragment();
@@ -66,33 +61,39 @@ public class CardFragment extends Fragment implements Serializable {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_card, container, false);
-        zone = v.findViewById(R.id.zone);
-        dos = v.findViewById(R.id.dos);
-
-        face = v.findViewById(R.id.face);
-        face.setImageDrawable(this.getActivity().getDrawable(card.getImageViewId()));
-        zone.setOnClickListener(new View.OnClickListener() {
+        // Association with graphics elements
+        frame = v.findViewById(R.id.frame);
+        backImage = v.findViewById(R.id.backImage);
+        frontImage = v.findViewById(R.id.frontImage);
+        frontImage.setImageDrawable(this.getActivity().getDrawable(card.getImageViewId()));
+        frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    dos.setVisibility(View.INVISIBLE);
-                    face.setVisibility(View.VISIBLE);
-                    if (Memory.getInstance().pickACard(card)) {
-                        ((GameActivity) getActivity()).endGame(true);
-                    }
-                    ((GameActivity) getActivity()).resetWrongCards();
+                // Listener for a card click
+                backImage.setVisibility(View.INVISIBLE);
+                frontImage.setVisibility(View.VISIBLE);
+                if (Memory.getInstance().pickACard(card)) {
+                    ((GameActivity) getActivity()).endGame(true);
+                }
+                ((GameActivity) getActivity()).resetWrongCards();
             }
         });
         return v;
     }
 
     /**
-     * Méthode qui permet de remettre la carte dans un état inconnu lorsque c'est la mauvaise
+     * Function to return wrong cards
      */
     public void wrongCard() {
-        dos.setVisibility(View.VISIBLE);
-        face.setVisibility(View.INVISIBLE);
+        backImage.setVisibility(View.VISIBLE);
+        frontImage.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Getter for the card object
+     *
+     * @return card
+     */
     public Card getCard() {
         return card;
     }
