@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Memory implements Serializable {
-
+    
     //Instance of the game
     private static Memory instance;
 

@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity {
     protected TextView titleInGame;
 
     //Game timer
-    private TimerGame timer = new TimerGame();
+    private TimerGame timer = new TimerGame();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +70,8 @@ public class GameActivity extends AppCompatActivity {
         for (Card c : game.getCards()) {
             Bundle b = new Bundle();
             b.putSerializable("card", c);
-
             CardFragment cf = new CardFragment();
             cf.setArguments(b);
-
             cardsFragments.add(cf);
 
         }

@@ -2,6 +2,7 @@ package com.example.usrlocal.memory;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,9 +17,6 @@ import game.Memory;
 import game.MemoryException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    // Name of the prefs file
-    public static final String PREFS_FILE = "MemoryPrefs";
 
     // Instance of the game
     private Memory game = Memory.getInstance();
@@ -39,13 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         // Get prefs (win games and played games) in the prefs files
-        SharedPreferences prefs = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
-        String restoredText = prefs.getString("text", null);
-        // if there are some infos get them
-        if (restoredText != null) {
-            game.setNbPlayedGames(prefs.getInt("nbParties", 0));//"No name defined" is the default value.
-            game.setNbWin(prefs.getInt("nbVictoires", 0)); //0 is the default value.
-        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        game.setNbPlayedGames(prefs.getInt("nbGames", 0));//0 is the default value.
+        game.setNbWin(prefs.getInt("nbWins", 0)); //0 is the default value.
 
         // Configuration of the graphics elements
         playButton = (Button) findViewById(R.id.buttonPlay);
