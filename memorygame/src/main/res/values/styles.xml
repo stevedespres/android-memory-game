@@ -6,6 +6,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonStyle</item>
+    </style>
+
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">casual</item>
+    </style>
+
+    <style name="ButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">casual</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="RadioButtonStyle" parent="android:Widget.CompoundButton.RadioButton">
+        <item name="android:fontFamily">casual</item>
     </style>
 
 </resources>

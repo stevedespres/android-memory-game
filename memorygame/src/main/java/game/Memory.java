@@ -11,6 +11,11 @@ import java.util.List;
 public class Memory implements Serializable {
 
     private static Memory instance;
+
+    private int nbPartiesJouees = 0;
+    private int nbVictoires = 0;
+    private String difficulte = "Facile";
+
     // Globales variables
     static private int N_PAIRS_MIN = 1;
     static private int N_PAIRS_MAX = 6;
@@ -34,8 +39,7 @@ public class Memory implements Serializable {
      * @param nPairs
      * @throws MemoryException
      */
-    private Memory(final int nPairs) throws MemoryException {
-        init(nPairs);
+    private Memory() {
     }
 
     /**
@@ -45,10 +49,10 @@ public class Memory implements Serializable {
      * @return
      * @throws MemoryException
      */
-    public static Memory getInstance(final int nPairs) throws MemoryException {
+    public static Memory getInstance() {
         synchronized (Memory.class) {
             if (instance == null)
-                instance = new Memory(nPairs);
+                instance = new Memory();
             return instance;
         }
     }
@@ -209,4 +213,12 @@ public class Memory implements Serializable {
             lastPairIsGood = true;
         }
     }
+
+    public int getNbVictoires() { return nbVictoires;}
+    public void setNbVictoires(int nbVictoires) {this.nbVictoires = nbVictoires;}
+    public int getNbPartiesJouees() { return nbPartiesJouees; }
+    public void setNbPartiesJouees(int nbPartiesJouees) { this.nbPartiesJouees = nbPartiesJouees; }
+    public void setNPairs(int nPairs){this._nPairs = nPairs;}
+    public void setDifficulte(String difficulte){this.difficulte = difficulte;}
+    public String getDifficulte(){return this.difficulte;}
 }

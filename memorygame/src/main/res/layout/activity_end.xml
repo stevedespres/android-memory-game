@@ -5,7 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/colorAccent"
     tools:context=".EndActivity">
 
     <LinearLayout
@@ -17,19 +16,25 @@
             android:id="@+id/endText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="Fin de la partie"
-            android:gravity="center"/>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/winText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="Vous avez gagné !"
-            android:gravity="center"/>
+            android:textSize="18sp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <Button

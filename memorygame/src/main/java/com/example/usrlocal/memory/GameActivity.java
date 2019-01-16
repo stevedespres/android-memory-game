@@ -6,10 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,22 +17,23 @@ import game.Memory;
 
 public class GameActivity extends AppCompatActivity {
 
-    private Memory game;
+    private Memory game = Memory.getInstance();
     protected GridLayout container;
     protected List<CardFragment> cardsFragments = new ArrayList<>();
     protected ProgressBar timerBar = null;
     private TimerGame timer = new TimerGame();
+    protected TextView titleInGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Intent intent = getIntent();
+        titleInGame = (TextView) findViewById(R.id.title);
+
         timerBar = (ProgressBar) findViewById(R.id.timerBar);
         // Get Year data from UEsChoicesActivity
         container = (GridLayout) findViewById(R.id.container);
-        game = (Memory) intent.getSerializableExtra("GAME");
         switch (game.getNPairs()) {
             case 4:
                 container.setColumnCount(3);
@@ -52,6 +51,12 @@ public class GameActivity extends AppCompatActivity {
         initGameView();
         timer.execute();
 
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        titleInGame.setText("Memory : " + game.getDifficulte());
     }
 
     private void initGameView() {
@@ -89,6 +94,7 @@ public class GameActivity extends AppCompatActivity {
             timer.cancel(true);
             endActivityIntent.putExtra("win", true);
             startActivity(endActivityIntent);
+            finish();
         } else {
             endActivityIntent.putExtra("win", false);
             startActivity(endActivityIntent);

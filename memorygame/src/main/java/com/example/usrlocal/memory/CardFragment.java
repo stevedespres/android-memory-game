@@ -74,16 +74,12 @@ public class CardFragment extends Fragment implements Serializable {
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
                     dos.setVisibility(View.INVISIBLE);
                     face.setVisibility(View.VISIBLE);
-                    if (Memory.getInstance(0).pickACard(card)) {
+                    if (Memory.getInstance().pickACard(card)) {
                         ((GameActivity) getActivity()).endGame(true);
                     }
                     ((GameActivity) getActivity()).resetWrongCards();
-                } catch (MemoryException e) {
-                    e.printStackTrace();
-                }
             }
         });
         return v;
