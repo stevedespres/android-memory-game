@@ -42,12 +42,12 @@ public class GameActivity extends AppCompatActivity {
         container = (GridLayout) findViewById(R.id.container);
         switch (game.getNPairs()) {
             case 4:
-                container.setColumnCount(3);
+                container.setColumnCount(2);
                 container.setRowCount(4);
                 break;
             case 5:
-                container.setColumnCount(3);
-                container.setRowCount(4);
+                container.setColumnCount(2);
+                container.setRowCount(5);
                 break;
             case 6:
                 container.setColumnCount(3);
@@ -130,14 +130,14 @@ public class GameActivity extends AppCompatActivity {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            String result = "";
             for (int i = 0; i <= 100; i++) {
+                if(this.isCancelled())
+                    break;
                 try {
                     Thread.sleep(1000L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                result += i;
                 publishProgress(i);
             }
             return null;

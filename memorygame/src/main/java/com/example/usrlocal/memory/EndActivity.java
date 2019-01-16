@@ -49,6 +49,12 @@ public class EndActivity extends Activity {
             winText.setText("Vous avez perdu, le temps est écoulé !");
         }
 
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("nbGames", Memory.getInstance().getNbPlayedGames());
+        editor.putInt("nbWins", Memory.getInstance().getNbWin());
+        editor.apply();
+
         // Listener for the menu button
         // Allow to return to the menu
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +72,6 @@ public class EndActivity extends Activity {
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putInt("nbGames", Memory.getInstance().getNbPlayedGames());
-                editor.putInt("nbWins", Memory.getInstance().getNbWin());
-                editor.apply();
                 finish();
             }
         });
