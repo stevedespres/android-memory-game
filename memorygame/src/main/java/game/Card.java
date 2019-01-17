@@ -1,34 +1,60 @@
 package game;
 
-public class Card {
+import java.io.Serializable;
 
-    private int _id;
-    private int _pairId;
-    private int _imageViewId;
-    private boolean _discovered;
+public class Card implements Serializable {
 
-    public Card(int id, int pairId, int imageViewId){
-        _id=id;
-        _pairId=pairId;
-        _discovered = false;
-        _imageViewId = imageViewId;
+    /**
+     * Variables of a card object
+     */
+    private int id;
+    private int pairId;
+    private int imageViewId;
+    private boolean discovered;
+    private boolean visible;
+
+    /**
+     * Constructor of a card
+     *
+     * @param id
+     * @param pairId
+     * @param imageViewId
+     */
+    public Card(int id, int pairId, int imageViewId) {
+        this.id = id;
+        this.pairId = pairId;
+        discovered = false;
+        this.imageViewId = imageViewId;
     }
 
+    /**
+     * Getters and setters
+     */
     public int getId() {
-        return _id;
+        return id;
     }
 
     public int getPairId() {
-        return _pairId;
+        return pairId;
     }
 
-    public void setDiscovered(){
-        _discovered=true;
+    public void setDiscovered(boolean value) {
+        discovered = value;
     }
 
     public boolean isDiscovered() {
-        return _discovered;
+        return discovered;
     }
 
-    public int getImageViewId(){ return _imageViewId; }
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean _visible) {
+        this.visible = _visible;
+    }
+
+    public int getImageViewId() {
+        return imageViewId;
+    }
 }

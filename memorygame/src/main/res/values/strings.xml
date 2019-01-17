@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Memory</string>
+    <string name="app_name">Memory gelé</string>
+    <string name="credits">Crédits</string>
 </resources>
