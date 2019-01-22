@@ -134,7 +134,7 @@ public class GameActivity extends AppCompatActivity {
                 if(this.isCancelled())
                     break;
                 try {
-                    Thread.sleep(1000L);
+                    Thread.sleep(game.getGameTimer());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -91,14 +91,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public int getNbPairsfromDifficulty() {
         if (easyRadioButton.isChecked()) {
             game.setDifficulty("Facile");
+            game.setGameTimer(500L);
             return 4;
         }
         if (middleRadioButton.isChecked()) {
             game.setDifficulty("Moyen");
+            game.setGameTimer(750L);
             return 5;
         }
         if (hardRadioButton.isChecked()) {
             game.setDifficulty("Difficile");
+            game.setGameTimer(1000L);
             return 6;
         }
         return 0;

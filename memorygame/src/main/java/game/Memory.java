@@ -19,6 +19,7 @@ public class Memory implements Serializable {
     private int nbPlayedGames = 0;
     private int nbWin = 0;
     private String difficulty = "Facile";
+    private long gameTimer = 500L;
 
     // Variables to manage pairs
     private int nbPairs;
@@ -203,4 +204,8 @@ public class Memory implements Serializable {
     public String getDifficulty() {
         return this.difficulty;
     }
+
+    public long getGameTimer() { return this.gameTimer; }
+
+    public void setGameTimer(long time) { this.gameTimer = time; }
 }
