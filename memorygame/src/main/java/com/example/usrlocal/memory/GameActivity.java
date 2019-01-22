@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,9 +38,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         //Initialisation of the graphics elements
-        titleInGame = (TextView) findViewById(R.id.titleInGame);
-        timerBar = (ProgressBar) findViewById(R.id.timerBar);
-        container = (GridLayout) findViewById(R.id.container);
+        titleInGame = findViewById(R.id.titleInGame);
+        timerBar = findViewById(R.id.timerBar);
+        container = findViewById(R.id.container);
         switch (game.getNPairs()) {
             case 4:
                 container.setColumnCount(2);
@@ -61,7 +62,10 @@ public class GameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //Start the timer
-        timer.execute();
+        if(game.getWithTime())
+            timer.execute();
+        else
+            findViewById(R.id.timerLayout).setVisibility(View.INVISIBLE);
     }
 
     private void initGameView() {

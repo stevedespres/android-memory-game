@@ -116,6 +116,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
+     * Activate or deactivate the timer in game
+     */
+    private void activeTimer() {
+        AlertDialog.Builder alert;
+        game.setWithTime(!game.getWithTime());
+        if (game.getWithTime())
+            alert = new AlertDialog.Builder(this).setTitle("Timer").setMessage("Le jeu est configurer avec le contre la montre").setPositiveButton("OK", null);
+        else
+            alert = new AlertDialog.Builder(this).setTitle("Timer").setMessage("Le jeu est configurer sans le contre la montre").setPositiveButton("OK", null);
+        alert.show();
+    }
+
+    /**
      * On options item selected : manage click on the action bar
      *
      * @param item item
@@ -124,8 +137,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_credits:
+            case R.id.creditItem:
                 showCredits();
+                return true;
+            case R.id.timerItem:
+                activeTimer();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -24,20 +24,22 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/timerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_margin="10px">
+            android:layout_margin="10px"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/titleTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10px"
                 android:text="Temps :"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="14sp"
-                android:layout_marginRight="10px"/>
+                android:textSize="14sp" />
 
             <ProgressBar
                 android:id="@+id/timerBar"
