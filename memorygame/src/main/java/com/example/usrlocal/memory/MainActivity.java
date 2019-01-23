@@ -1,7 +1,10 @@
 package com.example.usrlocal.memory;
 
+import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -122,9 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder alert;
         game.setWithTime(!game.getWithTime());
         if (game.getWithTime())
-            alert = new AlertDialog.Builder(this).setTitle("Timer").setMessage("Le jeu est configurer avec le contre la montre").setPositiveButton("OK", null);
+            alert = new AlertDialog.Builder(this).setTitle("Timer").setMessage("Le jeu est configuré avec le contre la montre").setPositiveButton("OK", null);
         else
-            alert = new AlertDialog.Builder(this).setTitle("Timer").setMessage("Le jeu est configurer sans le contre la montre").setPositiveButton("OK", null);
+            alert = new AlertDialog.Builder(this).setTitle("Timer").setMessage("Le jeu est configuré sans le contre la montre").setPositiveButton("OK", null);
         alert.show();
     }
 
@@ -163,6 +166,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
         }
     }
-
-
 }
