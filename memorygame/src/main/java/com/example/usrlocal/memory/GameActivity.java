@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +67,13 @@ public class GameActivity extends AppCompatActivity {
             timer.execute();
         else
             findViewById(R.id.timerLayout).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        timer.cancel(true);
+        finish();
     }
 
     private void initGameView() {
