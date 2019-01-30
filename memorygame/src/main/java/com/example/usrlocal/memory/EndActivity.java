@@ -60,8 +60,6 @@ public class EndActivity extends Activity {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menuIntent = new Intent(EndActivity.this, MainActivity.class);
-                startActivity(menuIntent);
                 finish();
             }
         });
@@ -72,6 +70,7 @@ public class EndActivity extends Activity {
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Memory.getInstance().mainActivity.finish();
                 finish();
             }
         });

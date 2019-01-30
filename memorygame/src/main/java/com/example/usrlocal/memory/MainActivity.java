@@ -1,10 +1,8 @@
 package com.example.usrlocal.memory;
 
-import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected TextView nbPlayedGame;
     protected TextView nbWin;
 
+    //MediaPlayer for the background music
+    private MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         hardRadioButton = (RadioButton) findViewById(R.id.radioButtonHard);
         nbPlayedGame = (TextView) findViewById(R.id.nbGames);
         nbWin = (TextView) findViewById(R.id.nbWins);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.music);
+        mediaPlayer.setLooping(true);
+
+        game.mainActivity = this;
     }
 
     @Override
@@ -94,17 +100,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public int getNbPairsfromDifficulty() {
         if (easyRadioButton.isChecked()) {
             game.setDifficulty("Facile");
-            game.setGameTimer(500L);
+            game.setGameTimer(450L);
             return 4;
         }
         if (middleRadioButton.isChecked()) {
             game.setDifficulty("Moyen");
-            game.setGameTimer(750L);
+            game.setGameTimer(500L);
             return 5;
         }
         if (hardRadioButton.isChecked()) {
             game.setDifficulty("Difficile");
-            game.setGameTimer(1000L);
+            game.setGameTimer(550L);
             return 6;
         }
         return 0;
@@ -130,6 +136,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             alert = new AlertDialog.Builder(this).setTitle("Timer").setMessage("Le jeu est configuré sans le contre la montre").setPositiveButton("OK", null);
         alert.show();
     }
+    /**
+     * Activate or deactivate the music in game
+     */
+    private void activeMusic() {
+        if (mediaPlayer.isPlaying())
+            mediaPlayer.pause();
+        else {
+            mediaPlayer.start();
+        }
+    }
+
 
     /**
      * On options item selected : manage click on the action bar
@@ -145,6 +162,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             case R.id.timerItem:
                 activeTimer();
+                return true;
+            case R.id.musicItem:
+                activeMusic();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -162,8 +182,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 if (initGame(getNbPairsfromDifficulty())) {
                     startActivity(intent);
-                    finish();
                 }
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mediaPlayer.stop();
     }
 }

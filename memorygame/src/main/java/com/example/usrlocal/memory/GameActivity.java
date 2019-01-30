@@ -1,6 +1,7 @@
 package com.example.usrlocal.memory;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ public class GameActivity extends AppCompatActivity {
     protected TextView titleInGame;
 
     //Game timer
-    private TimerGame timer = new TimerGame();;
+    private TimerGame timer = new TimerGame();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +123,7 @@ public class GameActivity extends AppCompatActivity {
         } else {
             endActivityIntent.putExtra("win", false);
             startActivity(endActivityIntent);
+            finish();
         }
     }
 

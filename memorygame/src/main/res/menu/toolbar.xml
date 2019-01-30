@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/musicItem"
+        android:title="On/Off Musique" />
+    <item
         android:id="@+id/timerItem"
         android:title="Contre la montre" />
     <item

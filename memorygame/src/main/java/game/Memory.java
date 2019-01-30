@@ -1,5 +1,6 @@
 package game;
 
+import com.example.usrlocal.memory.MainActivity;
 import com.example.usrlocal.memory.R;
 
 import java.io.Serializable;
@@ -10,6 +11,8 @@ public class Memory implements Serializable {
 
     //Instance of the game
     private static Memory instance;
+    //Instance of the mainActivity
+    public  MainActivity mainActivity;
 
     // Globales variables
     static private int N_PAIRS_MIN = 1;
